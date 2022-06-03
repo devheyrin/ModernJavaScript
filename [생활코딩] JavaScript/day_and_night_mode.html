@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Change the Day-Night Mode!</h1>
+    <h2>Day Button</h2>
+    <input type="button" value="🌞" id="day">
+    <h2>Night Button</h2>
+    <input type="button" value="🌚" id="night">
+    <h2>Day or Night Button</h2>
+    <input type="button" value="🌞" id="day-or-night">
+    <script>
+        const $body = document.body;
+        const $day_button = document.querySelector("#day");
+        const $night_button = document.querySelector('#night');
+        const $day_or_night_button = document.querySelector('#day-or-night');
+        let day_or_night;
+
+        function onClickDayButton() {
+            $body.style.backgroundColor = 'white';
+            $body.style.color = 'black';
+            day_or_night = 'day'
+        }
+
+        function onClickNightButton() {
+            $body.style.backgroundColor = 'black';
+            $body.style.color = 'white'
+            day_or_night = 'night'
+        }
+
+        function onClickDayAndNight() {
+            if (day_or_night == 'day') {
+                $body.style.backgroundColor = 'black';
+                $body.style.color = 'white'
+                $day_or_night_button.value = '🌚';
+                day_or_night = 'night'
+            } else {
+                $body.style.backgroundColor = 'white';
+                $body.style.color = 'black';
+                $day_or_night_button.value = '🌞';
+                day_or_night = 'day'
+            }
+        }
+
+        $day_button.addEventListener('click', onClickDayButton);
+        $night_button.addEventListener('click', onClickNightButton);
+        $day_or_night_button.addEventListener('click', onClickDayAndNight);    
+    </script>
+</body>
+</html>
