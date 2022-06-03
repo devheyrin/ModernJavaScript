@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Change the Day-Night Mode!</h1>
+    <h1>This is <span id="status">Day</span> Mode</h1>
     <h2>Day Button</h2>
     <input type="button" value="🌞" id="day">
     <h2>Night Button</h2>
@@ -18,17 +19,21 @@
         const $day_button = document.querySelector("#day");
         const $night_button = document.querySelector('#night');
         const $day_or_night_button = document.querySelector('#day-or-night');
-        let day_or_night;
+        const $status = document.querySelector('#status');
+        
+        let day_or_night = 'day';
 
         function onClickDayButton() {
             $body.style.backgroundColor = 'white';
             $body.style.color = 'black';
+            $status.textContent = 'Day';
             day_or_night = 'day'
         }
 
         function onClickNightButton() {
             $body.style.backgroundColor = 'black';
-            $body.style.color = 'white'
+            $body.style.color = 'white';
+            $status.textContent = 'Night';
             day_or_night = 'night'
         }
 
@@ -36,14 +41,16 @@
             if (day_or_night == 'day') {
                 $body.style.backgroundColor = 'black';
                 $body.style.color = 'white'
-                $day_or_night_button.value = '🌚';
+                $day_or_night_button.value = '🌞';
+                $status.textContent = 'Night';
                 day_or_night = 'night'
             } else {
                 $body.style.backgroundColor = 'white';
                 $body.style.color = 'black';
-                $day_or_night_button.value = '🌞';
+                $day_or_night_button.value = '🌚';
+                $status.textContent = 'Day';
                 day_or_night = 'day'
-            }
+            }   
         }
 
         $day_button.addEventListener('click', onClickDayButton);
