@@ -41,13 +41,13 @@
             if (day_or_night == 'day') {
                 $body.style.backgroundColor = 'black';
                 $body.style.color = 'white'
-                $day_or_night_button.value = '🌞';
+                this.value = '🌞';
                 $status.textContent = 'Night';
                 day_or_night = 'night'
             } else {
                 $body.style.backgroundColor = 'white';
                 $body.style.color = 'black';
-                $day_or_night_button.value = '🌚';
+                this.value = '🌚';
                 $status.textContent = 'Day';
                 day_or_night = 'day'
             }   
