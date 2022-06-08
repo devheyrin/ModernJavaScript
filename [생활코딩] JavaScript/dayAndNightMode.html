@@ -45,24 +45,43 @@
         const $body = document.body;
         const $day_or_night_button = document.querySelector('#day-or-night');
         const $status = document.querySelector('#status');
-        const $alist = document.querySelectorAll('a');
+        const $links = document.querySelectorAll('a');
+
+        const Body = {
+            setColor: function(color) {
+                $body.style.color = color;
+            }, 
+            setBackgroundColor: function(color) {
+                $body.style.backgroundColor = color;
+            }
+        }
+
+        const Links = {
+            setColor: function(color) {
+                let i = 0;
+                while (i < $links.length) {
+                    $links[i].style.color = color;
+                    i++;        
+                }
+            }
+        }
 
         let day_or_night = 'day';
 
         function onClickDayAndNight() {
             if (day_or_night == 'day') {
-                $body.style.backgroundColor = 'black';
-                $body.style.color = 'white'
+                Body.setBackgroundColor('black');
+                Body.setColor('white');
+                Links.setColor('powderblue');
                 this.value = '🌞';
                 $status.textContent = 'Night';
-                changeLinkColor('powderblue');
                 day_or_night = 'night';
             } else {
-                $body.style.backgroundColor = 'white';
-                $body.style.color = 'black';
+                Body.setBackgroundColor('white');
+                Body.setColor('black');
+                Links.setColor('blue');
                 this.value = '🌚';
                 $status.textContent = 'Day';
-                changeLinkColor('blue');
                 day_or_night = 'day'
             } 
         }
