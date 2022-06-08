@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Object</h1>
+    <ul>
+        <li>순서 없이 정보를 저장할 수 있는 자료구조</li>
+        <li>이름표를 붙여 정리한 서랍</li>
+    </ul>
+    <h2>Create</h2>
+    <script>
+        let friends = {
+            "programmer": "Joey",
+            "designer": "Monika"
+        };
+        document.write(`programmer: ${friends.programmer}<br>`);
+        document.write(`designer: ${friends.designer}<br>`);
+        friends.bookeeper = "Ross";
+        friends["teacher"] = "Rachel";
+        document.write(`bookeeper: ${friends.bookeeper}<br>`);
+        document.write(`bookeeper: ${friends.teacher}<br>`);
+    </script>
+    <h2>Iterate</h2>
+    <script>
+        document.write("key     value<br>")
+        for (let friend in friends) {
+            document.write(`${friend} is ${friends[friend]}<br>`);
+        }
+    </script>
+    <h2>Property & Method</h2>
+    <script>
+        friends.showAll = function() {
+            for (let friend in this) {
+                document.write(`${friend} is ${this[friend]}<br>`);
+            }
+        }
+        friends.showAll();
+
+        friends.printProgrammer = function() {
+            
+        }
+    </script>
+
+</body>
+</html>
