@@ -1,41 +1,121 @@
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>숫자야구</title>
 </head>
-<body>
-<form id="form">
-  <input type="text" id="input">
-  <button>확인</button>
-</form>
-<div id="logs"></div>
-<script>
-  const $form = document.querySelector('#form');
-  const $input = document.querySelector('#input');
-  const $logs = document.querySelector('#logs');
-  
-  const numbers = [];
-  for (let n = 0; n < 9; n++) {
-      numbers.push(n+1);
-  }
 
-  const answers = [];
-  for (let n = 0; n < 4; n++) {
+<body>
+  <form id="form">
+    <input type="text" id="input">
+    <button>확인</button>
+  </form>
+  <div id="logs"></div>
+  <script>
+    const $form = document.querySelector('#form');
+    const $input = document.querySelector('#input');
+    const $logs = document.querySelector('#logs');
+    const $button = document.querySelector('button');
+
+    const numbers = [];
+    for (let n = 0; n < 9; n++) {
+      numbers.push(n + 1);
+    }
+
+    const answers = [];
+    for (let n = 0; n < 4; n++) {
       const index = Math.floor(Math.random() * numbers.length);
       answers.push(numbers[index]);
       numbers.splice(index, 1); // 뽑힌 숫자 제거
-  }
-  console.log(answers);
+    }
+    console.log(answers);
 
+    // 검사하는 코드 
+    const tries = [];
+    let outs = 0;
 
+    function checkInput(input) {
+      if (isNaN(+input)) {
+        return alert("숫자만 입력해 주세요!");
+      }
+      if (input.length !== 4) {
+        return alert("4자리의 숫자를 입력해 주세요!");
+      }
+      if (new Set(input).size !== 4) {
+        return alert("중복되지 않는 숫자를 입력해 주세요!");
+      }
+      if (tries.includes(input)) {
+        return alert("이미 시도한 값입니다. 다른 값을 입력해 주세요!");
+      }
+      return true;
+    }
 
-  
+    function checkBallAndStrike(input) {
+      let strike = 0;
+      let ball = 0;
 
+      answers.forEach((element, i) => {
+        let index = input.indexOf(answers[i]);
+        if (index > -1) {
+          if (index == i) {
+            strike++;
+          } else {
+            ball++;
+          }
+        }
+      });
+      return `${ball}B${strike}S`;
+    }
 
+    function defeated() {
+      $logs.append(`실패! 정답은 ${answers.join('')}`, document.createElement('br'));
+      return;
+    }
 
+    function onSubmitForm(event) {
+      event.preventDefault();
+      console.log($input.value);
+      let input = $input.value;
+      $input.value = "";
 
+      // 입력값 유효성 검사
+      let result = checkInput(input);
+      if (!result) {
+        // 문제 있는 입력값
+        return;
+      }
 
+      // 문제 없는 입력값 
+      if (answers.join('') === input) {
+        $logs.textContent = "홈런! 게임 종료!";
+        return;
+      }
 
-</script>
+      // 10번째 시도이면 종료 
+      if (tries.length >= 3) {
+        defeated();
+        return;
+      }
+
+      let ballnStrike = checkBallAndStrike(input);
+      if (ballnStrike == '0B0S') {
+        outs++;
+        $logs.append(`${input} : ${outs} 아웃`, document.createElement('br'));
+      } else {
+        $logs.append(`${input} : ${ballnStrike}`, document.createElement('br'));
+      }
+
+      if (outs == 3) {
+        defeated();
+        return;
+      }
+      // 스트라이크, 볼 검사 
+      tries.push(input);
+    }
+
+    $form.addEventListener('submit', onSubmitForm);
+
+  </script>
 </body>
+
 </html>
