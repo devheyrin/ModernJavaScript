@@ -15,6 +15,32 @@
             text-align: center;
             margin-right: 20px;
         }
+
+        .red {
+            background-color: red;
+        }
+        
+        .orange {
+            background-color: orange;
+        }
+        
+        .yellow {
+            background-color: yellow;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .red, .blue, .green {
+            color: white;
+        }
+
+
     </style>
 </head>
 
@@ -22,36 +48,61 @@
     <div id="result">추첨 결과는? </div>
     <div id="bonus">보너스: </div>
     <script>
-        const candidate = Array(45).fill().map((v, i) => i + 1);
+        const candidate = Array(45).fill().map((e, i) => i + 1);
+        console.log(candidate);
         const shuffle = [];
+        // 피셔-예이츠 셔플 
         while (candidate.length > 0) {
-            const random = Math.floor(Math.random() * candidate.length); // 무작위 인덱스 뽑기
-            const spliceArray = candidate.splice(random, 1); // 뽑은 값은 배열에 들어 있음
-            const value = spliceArray[0]; // 배열에 들어 있는 값을 꺼내어
-            shuffle.push(value); // shuffle 배열에 넣기
+            const random = Math.floor(Math.random() * candidate.length);
+            const spliceArr = candidate.splice(random, 1);
+            const value = spliceArr[0];
+            shuffle.push(value);
         }
         console.log(shuffle);
-        const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b);
+
+        const lottos = shuffle.slice(0, 6).sort((a, b) => a - b);
         const bonus = shuffle[6];
-        console.log(winBalls, bonus);
+        console.log(lottos, bonus);
 
         const $result = document.querySelector('#result');
-        const drawBall = (number, $parent) => {
+        const $bonus = document.querySelector('#bonus');
+
+        const showBall = (number, $target) => {
             const $ball = document.createElement('div');
-            $ball.className = 'ball';
+            $ball.classList.add("ball");
             $ball.textContent = number;
-            $parent.appendChild($ball);
+            let color = colorize(number); 
+            $ball.classList.add(color);
+            $target.append($ball);
         };
 
-        for (let i = 0; i < winBalls.length; i++) {
-            setTimeout(() => {
-                drawBall(winBalls[i], $result);
-            }, (i + 1) * 1000);
+        function colorize(number) {
+            let color = ''
+            if (number < 10) {
+                color = 'red';
+            } else if (number < 20) {
+                color = 'orange';
+            } else if (number < 30) {
+                color = 'yellow';
+            } else if (number < 40) {
+                color = 'blue';
+            } else {
+                color = 'green';
+            }
+            return color;
         }
 
-        const $bonus = document.querySelector('#bonus');
+        // 추첨 결과 출력
+        for (let i = 0; i < lottos.length; i++) {
+            setTimeout(() => {
+                showBall(lottos[i], $result);
+            }, 1000*(i+1));
+        }
+        
+        // 보너스 출력
         setTimeout(() => {
-            drawBall(bonus, $bonus);
+            showBall(bonus, $bonus);
         }, 7000);
+
     </script>
 </body>
